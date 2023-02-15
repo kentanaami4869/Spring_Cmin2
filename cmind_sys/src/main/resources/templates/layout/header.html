@@ -10,7 +10,7 @@
 　　		<div th:unless="${employee == null}">
 		<div class="user_info" >ログインユーザー：
 		<div class="user_info" >
-		<div th:object="${employee}"><p th:text="*{empName}"></p>
+		<div th:object="${employee}" th:text="${employee}">
 		</div>
 		 
 		</div>
