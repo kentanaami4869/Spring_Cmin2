@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+<link th:href="@{/css/layout.css}" rel="stylesheet" />
+<title>社員一覧画面</title>
+</head>
+<body>
+	<!-- ヘッダー -->
+	
+	<header th:include="layout/header :: head">
+	<th:block th:text="${employee.empId}">
+	</th:block>
+	
+	
+	</header>
+	
+	<!-- サイドバー -->
+	<aside th:include="layout/aside :: side"></aside>
+	<!-- メイン -->
+	<article class="main">
+		<h3 class="page_title">社員一覧画面</h3>
+		
+	
+	 <table class="table employee">
+     
+        <tr>
+          <th>社員番号</th>
+          <th>名前</th>
+          <th>生年月日</th>
+          <th>性別</th>
+        </tr>
+    
+     
+        <tr th:each="employee : ${employee}" th:object="${employee}">
+        
+          <td th:text="*{empId}"></td>
+          <td th:text="*{empName}"></td>
+          <td th:text="*{birthday}"></td>
+          <td th:if = "*{gender ==1 }">
+         <p>男</p>
+         
+         <td th:switch="*{gender}">
+  		<p th:case=2 th:text="女"></p>
+ 		<p th:case=0 th:text="不明"></p>
+  		<p th:case=9 th:text="適応不能"></p>
+
+          
+          </td>
+		
+         
+         
+        </tr>
+        
+    
+      
+    </table>
+    </article>
+	<!-- フッダー -->
+	<footer th:include="layout/footer :: foot"></footer>
+
+</body>
+</html>

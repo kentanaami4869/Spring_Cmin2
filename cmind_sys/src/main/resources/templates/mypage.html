@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+<link th:href="@{/css/layout.css}" rel="stylesheet" />
+<title>マイページ確認・変更画面</title>
+</head>
+<body>
+	<!-- ヘッダー -->
+	
+	<header th:include="layout/header :: head">
+	<th:block th:text="${loginForm.empId}"></th:block>
+		
+	</header>
+	
+	<!-- サイドバー -->
+	<aside th:include="layout/aside :: side"></aside>
+	<!-- メイン -->
+	<article class="mypage">
+		<h3 class="page_title">マイページ変更・確認画面</h3>
+		
+	
+	 
+     
+     <form th:action="@{/form}" th:object="${employee}" method="post" novalidate>
+                <label for="empId">社員番号：</label>
+                <input type="text" th:field="*{empId}" th:errorclass="is-invalid">
+                <span class="errorStr" th:errors="*{empId}"></span>
+                <br>
+
+                <label for="empName">名前：</label>
+                <input type="text" th:field="*{empName}">
+                <span class="errorStr" th:errors="*{empName}"></span>
+                <br>
+
+                <label for="password">パスワード：</label>
+                <input type="password" th:field="*{password}">
+                <span class="errorStr" th:errors="*{password}"></span>
+                <br>
+
+                <label for="birthday">生年月日：</label>
+                <input type="text" th:field="*{birthday}">
+                <span class="errorStr" th:errors="*{birthday}"></span>
+                <br>
+                
+                <label for="gender">性別：</label>
+                <input type="radio" th:field="*{gender}">
+                <span class="errorStr" th:errors="*{gender}"></span>
+                <br>
+
+                <button>変更確定</button>
+            </form>
+            
+     
+      
+   
+    </article>
+	<!-- フッダー -->
+	<footer th:include="layout/footer :: foot"></footer>
+
+</body>
+</html>
