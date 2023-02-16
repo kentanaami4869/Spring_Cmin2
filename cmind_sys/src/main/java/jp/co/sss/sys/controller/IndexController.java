@@ -29,12 +29,13 @@ import jp.co.sss.sys.repository.EmployeeRepository;
 public class IndexController {
 	
 	
+	
 	@Autowired
 	EmployeeRepository empRepository;
 	LoginForm loginform;
 	@Autowired
 	HttpSession session;
-	Employee employee;
+	
 	
 	
 	
@@ -53,42 +54,46 @@ public class IndexController {
 	 *
 	 * @param req
 	 * @param res
-	 * @param loginForn 
+	 * @param loginForm 
 	 * @return top.html
 	 */
 	@RequestMapping(path = "/top", method = RequestMethod.POST)
-	public String login(@Validated LoginForm loginForn, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model ) {
+	public String login(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model ) {
 		String empId = req.getParameter("empId");
 		String password = req.getParameter("password");
 		 
-		
+		//ログインした人の情報
 		Employee employee = empRepository.findByEmpIdAndPassword(empId, password);
-		req.setAttribute("loginUser", loginForn);
-
+		req.setAttribute("loginUser",employee);
+		
 	
 		//ログインチェック
 	    if(employee == null) {
 	      //存在しない場合
-	      String errMsg = "社員番号もしくはパスワードが違います．";
-	      model.addAttribute("errMsg", errMsg);
-	      
 	      return "login";
 
 	    }else {
 	      //存在した場合
-	    	List<Employee> emp= empRepository.findAll();
-	    	model.addAttribute("employee",emp); 
-	    	model.addAttribute("employee",employee); 
-	    	 
-	    	 
-	    	return "top";
+	    	
+		    	List<Employee> empAll= empRepository.findAll();    
+		    	model.addAttribute("employee",empAll);
+		    	model.addAttribute("employee",employee);
+	    
+		return "top";
+	    
 	    }
 	}
-	        
 }
+	
+	
+	   
+		
+	    	  
 
+			
+	    
 	 
-	  
+
 
 	
 		    

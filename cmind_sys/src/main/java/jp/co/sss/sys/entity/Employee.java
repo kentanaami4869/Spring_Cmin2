@@ -46,16 +46,7 @@ public class Employee {
 	@Column  (name="delete_at")
 	private Boolean delete;
 	
-	public Employee() {} 
-
-	public Employee(String empId, String empName, String password ,Date birthday,int gender,Boolean delete) {
-		this.empId = empId;
-		this.empName = empName;
-		this.password = password;
-		this.birthday = birthday;
-		this.gender = gender;
-		this.delete = delete;
-	}
+	
 
 	
 	
@@ -105,6 +96,8 @@ public class Employee {
 	public Boolean getDelete() {
 		return delete;
 	}
+
+	
 
 	
 	

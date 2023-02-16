@@ -15,7 +15,7 @@
 		
 			<h3>ログイン画面</h3>
 			<div class="form">
-                <h4 th:if="${employee}">errMsg</h4>
+                
             <th:form action="@{login}"  method="post">
             </th:if>
 				<form th:action="@{/top}"   method="post" th:object="${loginForm}">
