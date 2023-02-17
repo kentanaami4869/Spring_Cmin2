@@ -27,18 +27,18 @@ import jp.co.sss.sys.repository.EmployeeRepository;
  */
 @Controller
 public class IndexController {
-	
-	
-	
+
+
+
 	@Autowired
 	EmployeeRepository empRepository;
 	LoginForm loginform;
 	@Autowired
 	HttpSession session;
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * ログイン画面を表示する
 	 * @param loginForm
@@ -48,7 +48,7 @@ public class IndexController {
 	public String login( LoginForm loginForm,BindingResult br,Model model) {
 		return "login";
 	}
-	 
+
 	/**
 	 * 入力された値を元にログイン認証し、トップ画面に遷移する
 	 *
@@ -61,47 +61,55 @@ public class IndexController {
 	public String login(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model ) {
 		String empId = req.getParameter("empId");
 		String password = req.getParameter("password");
-		 
+
 		//ログインした人の情報
 		Employee employee = empRepository.findByEmpIdAndPassword(empId, password);
 		req.setAttribute("loginUser",employee);
-		
-	
+
+
 		//ログインチェック
-	    if(employee == null) {
-	      //存在しない場合
-	      return "login";
+		if(employee == null) {
+			//存在しない場合
+			return "login";
 
-	    }else {
-	      //存在した場合
-	    	
-		    	List<Employee> empAll= empRepository.findAll();    
-		    	model.addAttribute("employee",empAll);
-		    	model.addAttribute("employee",employee);
-	    
+		}else {
+			//存在した場合
+
+			List<Employee> empAll= empRepository.findAll();    
+			model.addAttribute("empAll",empAll);
+
+
+
+
+		} 	
+
+
+		model.addAttribute("employee",employee);
 		return "top";
-	    
-	    }
-	}
+
+
+
+	}		
+
 }
-	
-	
-	   
-		
-	    	  
-
-			
-	    
-	 
 
 
-	
-		    
 
-	    
-	
-	  
-		  
-	
-	  
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
