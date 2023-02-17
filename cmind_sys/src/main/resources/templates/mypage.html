@@ -23,7 +23,7 @@
 	
 	 
      
-     <form th:action="@{/form}" th:object="${employee}" method="post" novalidate>
+     <form th:action="@{/form}" th:object="${emp}" method="post" novalidate>
                 <label for="empId">社員番号：</label>
                 <input type="text" th:field="*{empId}" th:errorclass="is-invalid">
                 <span class="errorStr" th:errors="*{empId}"></span>

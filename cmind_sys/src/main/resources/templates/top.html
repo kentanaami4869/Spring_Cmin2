@@ -10,14 +10,16 @@
 	<!-- ヘッダー -->
 	
 	<header th:include="layout/header :: head">
-	<th:block th:text="${employee.empId}">
-	</th:block>
+	
+	<th:block th:text="${employee.empId}"></th:block>
 	
 	
 	</header>
 	
 	<!-- サイドバー -->
-	<aside th:include="layout/aside :: side"></aside>
+	<aside th:include="layout/aside :: side">
+	</aside>
+	
 	<!-- メイン -->
 	<article class="main">
 		<h3 class="page_title">社員一覧画面</h3>
@@ -38,20 +40,17 @@
           <td th:text="*{empId}"></td>
           <td th:text="*{empName}"></td>
           <td th:text="*{birthday}"></td>
-          <td th:if = "*{gender ==1 }">
-         <p>男</p>
+          <td th:switch="*{gender}">
+        
          
-         <td th:switch="*{gender}">
-  		<p th:case=2 th:text="女"></p>
- 		<p th:case=0 th:text="不明"></p>
-  		<p th:case=9 th:text="適応不能"></p>
-
-          
-          </td>
-		
-         
-         
-        </tr>
+        
+        <a th:case=1 th:text="男"></a>
+  		<a th:case=2 th:text="女"></a>
+ 		<a th:case=0 th:text="不明"></a>
+  		<a th:case=9 th:text="適応不能"></a>
+  		
+  		</td> 
+　　　　 </tr>
         
     
       

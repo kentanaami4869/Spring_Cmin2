@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -49,6 +50,12 @@ public class IndexController {
 		return "login";
 	}
 
+	@GetMapping(value = "/top")
+	String sample(){
+	return "top";
+	// 処理
+}
+
 	/**
 	 * 入力された値を元にログイン認証し、トップ画面に遷移する
 	 *
@@ -66,7 +73,6 @@ public class IndexController {
 		Employee employee = empRepository.findByEmpIdAndPassword(empId, password);
 		req.setAttribute("loginUser",employee);
 
-
 		//ログインチェック
 		if(employee == null) {
 			//存在しない場合
@@ -74,25 +80,41 @@ public class IndexController {
 
 		}else {
 			//存在した場合
-
 			List<Employee> empAll= empRepository.findAll();    
 			model.addAttribute("empAll",empAll);
-
-
-
-
+			model.addAttribute("url", "/top"); 
+	        
 		} 	
-
-
+          //ログインユーザー情報
 		model.addAttribute("employee",employee);
 		return "top";
 
-
-
 	}		
-
+	
+	/**
+	 * 入力された情報をもとに，社員情報を更新する，
+	 * @param req
+	 * @param res
+	 * @param br
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(path = "/mypage", method = RequestMethod.GET)
+	public String edit(@Validated  HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model ) {
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return "mypage";
+	}
 }
-
 
 
 
