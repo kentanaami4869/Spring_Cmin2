@@ -13,10 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jp.co.sss.sys.entity.Employee;
 import jp.co.sss.sys.form.LoginForm;
@@ -28,7 +26,7 @@ import jp.co.sss.sys.repository.EmployeeRepository;
  *
  */
 @Controller
-@SessionAttributes(types = Model.class)
+
 public class IndexController {
 
 
@@ -36,9 +34,9 @@ public class IndexController {
 	@Autowired
 	EmployeeRepository empRepository;
 	LoginForm loginform;
-	@Autowired
-	HttpSession session;
-
+	
+	
+	
 
 
 
@@ -52,26 +50,8 @@ public class IndexController {
 		return "login";
 	}
 
-	@GetMapping(value = "/top")
-	String sample(Model model,HttpServletRequest req, HttpServletResponse res){
-		
-
-		
-		
-		
-			
-			List<Employee> empAll= empRepository.findAll();    
-			model.addAttribute("empAll",empAll);
-
-		
-
-		
-
-
-
-		return "top";
-	}
-
+	
+	
 
 	// 処理
 
@@ -84,8 +64,8 @@ public class IndexController {
 	 * @param loginForm 
 	 * @return top.html
 	 */
-	@RequestMapping(path = {"/top","/mypage"}, method = RequestMethod.POST)
-	public String login(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model ,HttpSession session) {
+	@RequestMapping(path = "/top", method = RequestMethod.POST)
+	public String login(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model) {
 		String empId = req.getParameter("empId");
 		String password = req.getParameter("password");
 
@@ -111,9 +91,31 @@ public class IndexController {
 
 	}
 
+
+	@RequestMapping(path = "/top", method = RequestMethod.GET)
+	public String top(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
+		String empId = req.getParameter("empId");
+		String password = req.getParameter("password");
+
+		//ログインした人の情報
+		Employee employee = empRepository.findByEmpIdAndPassword(empId, password);
+		req.setAttribute("loginUser",employee);
+
+		
+			//存在した場合
+			List<Employee> empAll= empRepository.findAll();    
+			model.addAttribute("empAll",empAll);
+
+
+			
+		//ログインユーザー情報
+		session.setAttribute("employee",employee);
+		return "top";
+
+	}
+		
+		
 }
-
-
 
 
 	
