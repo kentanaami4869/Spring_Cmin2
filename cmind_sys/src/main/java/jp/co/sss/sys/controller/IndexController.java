@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jp.co.sss.sys.entity.Employee;
 import jp.co.sss.sys.form.LoginForm;
@@ -27,6 +28,7 @@ import jp.co.sss.sys.repository.EmployeeRepository;
  *
  */
 @Controller
+@SessionAttributes(types = Model.class)
 public class IndexController {
 
 
@@ -51,10 +53,28 @@ public class IndexController {
 	}
 
 	@GetMapping(value = "/top")
-	String sample(){
-	return "top";
+	String sample(Model model,HttpServletRequest req, HttpServletResponse res){
+		
+
+		
+		
+		
+			
+			List<Employee> empAll= empRepository.findAll();    
+			model.addAttribute("empAll",empAll);
+
+		
+
+		
+
+
+
+		return "top";
+	}
+
+
 	// 処理
-}
+
 
 	/**
 	 * 入力された値を元にログイン認証し、トップ画面に遷移する
@@ -64,8 +84,8 @@ public class IndexController {
 	 * @param loginForm 
 	 * @return top.html
 	 */
-	@RequestMapping(path = "/top", method = RequestMethod.POST)
-	public String login(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model ) {
+	@RequestMapping(path = {"/top","/mypage"}, method = RequestMethod.POST)
+	public String login(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model ,HttpSession session) {
 		String empId = req.getParameter("empId");
 		String password = req.getParameter("password");
 
@@ -82,43 +102,21 @@ public class IndexController {
 			//存在した場合
 			List<Employee> empAll= empRepository.findAll();    
 			model.addAttribute("empAll",empAll);
-			model.addAttribute("url", "/top"); 
-	        
+
+
 		} 	
-          //ログインユーザー情報
+		//ログインユーザー情報
 		model.addAttribute("employee",employee);
 		return "top";
 
-	}		
-	
-	/**
-	 * 入力された情報をもとに，社員情報を更新する，
-	 * @param req
-	 * @param res
-	 * @param br
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping(path = "/mypage", method = RequestMethod.GET)
-	public String edit(@Validated  HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model ) {
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		return "mypage";
 	}
+
 }
 
 
 
 
+	
 
 
 
