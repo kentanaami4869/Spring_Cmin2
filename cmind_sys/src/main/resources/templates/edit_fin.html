@@ -20,7 +20,12 @@
 	<article class="mypage">
 		<h3 class="page_title">マイページ変更完了画面</h3>
 		
-	
+	<form th:action="@{/edit_fin}" th:object="${mypage}" method="post" >
+
+                
+                <button>戻る</button>
+            </form>
+  
 	 
      
      

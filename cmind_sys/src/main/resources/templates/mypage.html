@@ -20,35 +20,51 @@
 	<article class="mypage">
 		<h3 class="page_title">マイページ変更・確認画面</h3>
 		
-	<table class="table employee">
+		 <table class="table employee">
      
-        <tr>
-          <th>社員番号</th>
        
+         
         
-          <td th:text="*{empId}"></td>
-  
-　　　　 </tr>
+       
+  		
+        
+    
+      
     </table>
-     <form th:action="@{/form}" th:object="${mypage}" method="post" novalidate>
+	
+    <form th:action="@{/mypage}" th:object="${empedit}" method="post">
+<table>
+<tr>
+<th class="cell_title">社員番号</th>
+<th class="cell_required"></th>
+<td th:text="*{empId}" th:field="*{empId}"></td>
+</tr>
+<tr>
+<th class="cell_title">名前</th>
+<th class="cell_required"></th>
+<td><input type="text" th:field="*{empName}"></td>
+</tr>
+<tr>
+<th class="cell_title">パスワード</th>
+<th class="cell_required"></th>
+<td><input type="password" th:field="*{password}"></td>
+</tr>
+<tr>
+<th class="cell_title">生年月日</th>
+<th class="cell_required"></th>
+<td><input type="text" th:field="*{birthday}"></td>
+</tr>
+<tr>
+<th class="gender">性別：</th>
+<th class="cell_required"></th>
+<td><input type="radio" name="gender" value="man" checked>男性
+<input type="radio" name="gender" value="women">女性  </td>       
+</tr>           
 
-                <label for="password">パスワード：</label>
-                <input type="password" th:field="*{password}">
-                <span class="errorStr" th:errors="*{password}"></span>
-                <br>
+</table>
+<div class="btn_area_center"><input type="submit" value="変更確定" class="btn"></div>
+</form>
 
-                <label for="birthday">生年月日：</label>
-                <input type="text" th:field="*{birthday}">
-                <span class="errorStr" th:errors="*{birthday}"></span>
-                <br>
-                
-                <label for="gender">性別：</label>
-                <input type="radio" th:field="*{gender}">
-                <span class="errorStr" th:errors="*{gender}"></span>
-                <br>
-
-                <button>変更確定</button>
-            </form>
   
     </article>
 	<!-- フッダー -->

@@ -19,7 +19,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
 
 	Employee findByEmpIdAndPassword(String empId, String password);
 
-	Employee findByEmpId(String empId);
+	
 
 	
 

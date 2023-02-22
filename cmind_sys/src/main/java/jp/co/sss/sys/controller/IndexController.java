@@ -74,7 +74,7 @@ public class IndexController {
 		//ログインした人の情報
 		Employee employee = empRepository.findByEmpIdAndPassword(empId, password);
 		
-	    session = req.getSession();
+	    
 	    //セッションデータ設定
 	    
 		session.setAttribute("loginUser",employee);
@@ -102,7 +102,7 @@ public class IndexController {
 	public String top(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 		
 
-		
+		session = req.getSession();
 	   
 		
 		session.getAttribute("loginUser");
@@ -125,7 +125,9 @@ public class IndexController {
 @RequestMapping(path = "/mypage", method = RequestMethod.POST)
 public String empEdit(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 	String empId = req.getParameter("empId");
-	Employee emp = empRepository.findByEmpId(empId);
+	String password = req.getParameter("password");
+	
+	Employee employee = empRepository.findByEmpIdAndPassword(empId, password);
 	
 	session.getAttribute("loginUser");
 	
@@ -134,7 +136,8 @@ public String empEdit(@Validated LoginForm loginForm, HttpServletRequest req, Ht
 
 		
 	//ログインユーザー情報
-	model.addAttribute("employee",emp);
+	model.addAttribute("employee",employee);
+	
 	return "mypage";
 
 }
