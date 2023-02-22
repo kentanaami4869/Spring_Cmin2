@@ -120,15 +120,51 @@ public class IndexController {
 	}
 		
 		
-}
 
+
+@RequestMapping(path = "/mypage", method = RequestMethod.POST)
+public String empEdit(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
+	String empId = req.getParameter("empId");
+	Employee emp = empRepository.findByEmpId(empId);
+	
+	session.getAttribute("loginUser");
+	
+	
+	
+
+		
+	//ログインユーザー情報
+	model.addAttribute("employee",emp);
+	return "mypage";
+
+}
+	
+	
 
 	
 
 
+@RequestMapping(path = "/mypage", method = RequestMethod.GET)
+public String empEdit1(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
+	
+	
+	
+	session.getAttribute("loginUser");
+	
+	
+	
 
+		
+	//ログインユーザー情報
+	
+	return "mypage";
 
+}
+	
+	
 
+	
+}
 
 
 

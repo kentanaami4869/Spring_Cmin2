@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <link th:href="@{/css/style.css}" rel="stylesheet" />
 <link th:href="@{/css/layout.css}" rel="stylesheet" />
-<title>マイページ確認・変更画面</title>
+<title>マイページ変更・確認画面</title>
 </head>
 <body>
 	<!-- ヘッダー -->
@@ -20,19 +20,17 @@
 	<article class="mypage">
 		<h3 class="page_title">マイページ変更・確認画面</h3>
 		
-	
-	 
+	<table class="table employee">
      
-     <form th:action="@{/form}" th:object="${emp}" method="post" novalidate>
-                <label for="empId">社員番号：</label>
-                <input type="text" th:field="*{empId}" th:errorclass="is-invalid">
-                <span class="errorStr" th:errors="*{empId}"></span>
-                <br>
-
-                <label for="empName">名前：</label>
-                <input type="text" th:field="*{empName}">
-                <span class="errorStr" th:errors="*{empName}"></span>
-                <br>
+        <tr>
+          <th>社員番号</th>
+       
+        
+          <td th:text="*{empId}"></td>
+  
+　　　　 </tr>
+    </table>
+     <form th:action="@{/form}" th:object="${mypage}" method="post" novalidate>
 
                 <label for="password">パスワード：</label>
                 <input type="password" th:field="*{password}">
@@ -51,10 +49,7 @@
 
                 <button>変更確定</button>
             </form>
-            
-     
-      
-   
+  
     </article>
 	<!-- フッダー -->
 	<footer th:include="layout/footer :: foot"></footer>
