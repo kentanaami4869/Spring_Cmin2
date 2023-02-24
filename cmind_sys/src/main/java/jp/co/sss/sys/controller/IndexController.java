@@ -2,6 +2,7 @@ package jp.co.sss.sys.controller;
 
 
 
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,7 @@ public class IndexController {
 
 
 
+	
 	@Autowired
 	EmployeeRepository empRepository;
 	LoginForm loginform;
@@ -78,6 +80,8 @@ public class IndexController {
 	    //セッションデータ設定
 	    
 		session.setAttribute("loginUser",employee);
+		//セッションデータ　破棄設定
+		
 		
 		//ログインチェック
 		if(employee == null) {
@@ -124,19 +128,24 @@ public class IndexController {
 
 @RequestMapping(path = "/mypage", method = RequestMethod.POST)
 public String empEdit(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
-	String empId = req.getParameter("empId");
-	String password = req.getParameter("password");
 	
-	Employee employee = empRepository.findByEmpIdAndPassword(empId, password);
 	
 	session.getAttribute("loginUser");
+	//更新データ情報
+	
+	
+    //更新情報を引数に更新するメソッド
+	
+    
+    
+	
 	
 	
 	
 
 		
-	//ログインユーザー情報
-	model.addAttribute("employee",employee);
+	
+	
 	
 	return "mypage";
 
@@ -148,17 +157,23 @@ public String empEdit(@Validated LoginForm loginForm, HttpServletRequest req, Ht
 
 
 @RequestMapping(path = "/mypage", method = RequestMethod.GET)
-public String empEdit1(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
+public String empUpdate(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 	
+	String empId = req.getParameter("empId");
+	String password = req.getParameter("password");
+
+	//ログインした人の情報
+	Employee employee = empRepository.findByEmpIdAndPassword(empId, password);
 	
+	model.addAttribute("loginemp",employee);
+	
+	   
 	
 	session.getAttribute("loginUser");
 	
-	
-	
-
 		
-	//ログインユーザー情報
+		
+	
 	
 	return "mypage";
 
