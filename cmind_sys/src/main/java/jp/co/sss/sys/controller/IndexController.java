@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import jp.co.sss.sys.entity.Employee;
 import jp.co.sss.sys.form.LoginForm;
@@ -27,20 +28,21 @@ import jp.co.sss.sys.repository.EmployeeRepository;
  * @author Inoue Nami
  *
  */
-@SessionAttributes(types = Employee.class) 
+
 @Controller
+@SessionAttributes(types = Employee.class) 
 public class IndexController {
 
 
 
-	
+
 	@Autowired
 	EmployeeRepository empRepository;
 	LoginForm loginform;
-	
-	
-	
-	
+
+
+
+
 
 
 
@@ -55,7 +57,7 @@ public class IndexController {
 	}
 	@Autowired
 	HttpSession session;
-	
+
 
 	// 処理
 
@@ -69,119 +71,108 @@ public class IndexController {
 	 * @return top.html
 	 */
 	@RequestMapping(path = "/top", method = RequestMethod.POST)
-	public String login(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
+	public String login(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,SessionStatus sessionStatus,HttpSession session) {
+		//ログインした人の情報
 		String empId = req.getParameter("empId");
 		String password = req.getParameter("password");
 
-		//ログインした人の情報
 		Employee employee = empRepository.findByEmpIdAndPassword(empId, password);
-		
-	    
-	    //セッションデータ設定
-	    
-		session.setAttribute("loginUser",employee);
+
+		//ログインユーザー情報
+		model.addAttribute("employee",employee);
+		//セッションデータ設定
+		session.setAttribute("employee",employee);
 		//セッションデータ　破棄設定
-		
-		
+		session.invalidate();
+
 		//ログインチェック
 		if(employee == null) {
 			//存在しない場合
 			return "login";
 
 		}else {
+			
 			//存在した場合
+			//社員情報一覧
 			List<Employee> empAll= empRepository.findAll();    
 			model.addAttribute("empAll",empAll);
 
 
-		} 	
-		//ログインユーザー情報
-		model.addAttribute("employee",employee);
-		return "top";
 
+
+			return "top";
+
+		}
 	}
-
 
 	@RequestMapping(path = "/top", method = RequestMethod.GET)
-	public String top(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
-		
+	public String top(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,SessionStatus sessionStatus,HttpSession session) {
+
 
 		session = req.getSession();
-	   
-		
-		session.getAttribute("loginUser");
-		
-			//存在した場合
-			List<Employee> empAll= empRepository.findAll();    
-			model.addAttribute("empAll",empAll);
+		session.getAttribute("employee");
 
 
-			
+		session.invalidate();
+		//存在した場合
+		List<Employee> empAll= empRepository.findAll();    
+		model.addAttribute("empAll",empAll);
+
+
+
 		//ログインユーザー情報
-		
+
 		return "top";
 
 	}
+
+
+
+
+	@RequestMapping(path = "/mypage", method = RequestMethod.POST)
+	public String empEdit(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,SessionStatus sessionStatus,HttpSession session) {
+		session = req.getSession();
+
+		session.getAttribute("employee");
+		//更新データ情報
 		
-		
+		session.invalidate();
+		//更新情報を引数に更新するメソッド
 
 
-@RequestMapping(path = "/mypage", method = RequestMethod.POST)
-public String empEdit(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
-	
-	
-	session.getAttribute("loginUser");
-	//更新データ情報
-	
-	
-    //更新情報を引数に更新するメソッド
-	
-    
-    
-	
-	
-	
-	
-
-		
-	
-	
-	
-	return "mypage";
-
-}
-	
-	
-
-	
 
 
-@RequestMapping(path = "/mypage", method = RequestMethod.GET)
-public String empUpdate(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
-	
-	String empId = req.getParameter("empId");
-	String password = req.getParameter("password");
 
-	//ログインした人の情報
-	Employee employee = empRepository.findByEmpIdAndPassword(empId, password);
-	
-	model.addAttribute("loginemp",employee);
-	
-	   
-	
-	session.getAttribute("loginUser");
-	
-		
-		
-	
-	
-	return "mypage";
 
-}
-	
-	
 
-	
+
+
+
+
+
+		return "mypage";
+
+	}
+
+
+
+
+
+
+	@RequestMapping(path = "/mypage", method = RequestMethod.GET)
+	public String empUpdate(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session,SessionStatus sessionStatus) {
+		session.getAttribute("employee");
+
+
+
+		session.invalidate();
+		return "mypage";
+
+	}
+
+
+
+
 }
 
 

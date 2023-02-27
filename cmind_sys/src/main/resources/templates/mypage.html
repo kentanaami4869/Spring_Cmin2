@@ -23,12 +23,13 @@
 
 
 
-		<form th:action="@{/mypage}" th:object="${loginemp}"
+		<form th:action="@{/mypage}" th:object="${employee}"
 			th:text="${employee}" method="post">
 
+			
 			<div class="cell_title">社員番号</div>
 			<div class="cell_required"></div>
-			<div th:text="${employee.empId}" th:object="${employee.empId}"></div>
+			<div th:text="*{employee.empId}" th:object="${employee.empId}"></div>
 
 
 			<div class="cell_title">名前</div>
@@ -55,7 +56,7 @@
 
 			<div class="gender">性別：</div>
 			<div class="cell_required"></div>
-			<div th:switch="*{employee.gender}">
+			<div th:switch="${employee.gender}">
 				<a th:case=1 th:text="男"></a> <a th:case=2 th:text="女"></a> <input
 					type="radio" name="gender" value="man" checked>男性 <input
 					type="radio" name="gender" value="women">女性
