@@ -57,7 +57,8 @@ public class IndexController {
 	}
 	@Autowired
 	HttpSession session;
-
+	SessionStatus sessionStatus;
+	
 
 	// 処理
 
@@ -75,15 +76,15 @@ public class IndexController {
 		//ログインした人の情報
 		String empId = req.getParameter("empId");
 		String password = req.getParameter("password");
-
+		
+		
 		Employee employee = empRepository.findByEmpIdAndPassword(empId, password);
 
 		//ログインユーザー情報
 		model.addAttribute("employee",employee);
 		//セッションデータ設定
 		session.setAttribute("employee",employee);
-		//セッションデータ　破棄設定
-		session.invalidate();
+		
 
 		//ログインチェック
 		if(employee == null) {
@@ -113,7 +114,7 @@ public class IndexController {
 		session.getAttribute("employee");
 
 
-		session.invalidate();
+		
 		//存在した場合
 		List<Employee> empAll= empRepository.findAll();    
 		model.addAttribute("empAll",empAll);
@@ -131,12 +132,21 @@ public class IndexController {
 
 	@RequestMapping(path = "/mypage", method = RequestMethod.POST)
 	public String empEdit(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,SessionStatus sessionStatus,HttpSession session) {
+		Object empUser = session.getAttribute("employee");
+
+		model.addAttribute("employee",empUser);
+
+		//ログインユーザー情報
+		
+		
 		session = req.getSession();
 
 		session.getAttribute("employee");
 		//更新データ情報
 		
-		session.invalidate();
+		 
+		 
+		
 		//更新情報を引数に更新するメソッド
 
 
@@ -161,10 +171,10 @@ public class IndexController {
 
 	@RequestMapping(path = "/mypage", method = RequestMethod.GET)
 	public String empUpdate(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session,SessionStatus sessionStatus) {
-		session.getAttribute("employee");
+		
 
-
-
+		
+		session = req.getSession();
 		session.invalidate();
 		return "mypage";
 
