@@ -3,6 +3,8 @@ package jp.co.sss.sys.controller;
 
 
 
+
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -110,68 +112,55 @@ public class IndexController {
 	public String top(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,SessionStatus sessionStatus,HttpSession session) {
 
 
-		session = req.getSession();
-		session.getAttribute("employee");
-
-
-
-		//存在した場合
-		List<Employee> empAll= empRepository.findAll();    
-		model.addAttribute("empAll",empAll);
-
-
-
-		//ログインユーザー情報
-
 		return "top";
 
 	}
 
 
 
-//mypage.html⇨
+	//mypage.html⇨
 	@RequestMapping(path = "/mypage", method = RequestMethod.POST)
-	public String empEdit(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,SessionStatus sessionStatus,HttpSession session) {
+	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,SessionStatus sessionStatus,HttpSession session) {
+		String empId = req.getParameter("empId");
+		String password = req.getParameter("password");
+
+
+		Employee employee = empRepository.findByEmpIdAndPassword(empId, password);
+
+		//ログインユーザー情報
+		model.addAttribute("employee",employee);
+		
+		
+		
+		
+		
 		session = req.getSession();
 		session.getAttribute("employee");
-		Object empUser = session.getAttribute("employee");
+		
 
-		model.addAttribute("employee",empUser);
+		
 
 		//ログインユーザー情報
 		return "mypage";
 	}
 	
 
-
-	
-	
-//別ページ⇨mypage.html
+	//別ページ⇨mypage.html
 	@RequestMapping(path = "/mypage", method = RequestMethod.GET)
-	public String emplink(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session,SessionStatus sessionStatus) {
-
-
-
+	public String empLink(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session,SessionStatus sessionStatus) {
 		session = req.getSession();
 		session.invalidate();
+		 
 		return "mypage";
 
-	
 
-
-
+	}
+	@RequestMapping(path = "/mypage", method = RequestMethod.PUT)
+	public String empUpdate(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session,SessionStatus sessionStatus) {
 		
-
-
-
-//更新情報を引数に更新するメソッド
-
-
-
-
-
-
-
+		
+		return "edit_fin";
+		
 	}
 }
 
