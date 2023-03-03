@@ -19,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import jp.co.sss.sys.entity.Employee;
 import jp.co.sss.sys.form.LoginForm;
@@ -59,7 +58,7 @@ public class IndexController {
 	}
 	@Autowired
 	HttpSession session;
-	SessionStatus sessionStatus;
+
 
 
 	// 処理
@@ -74,7 +73,7 @@ public class IndexController {
 	 * @return top.html
 	 */
 	@RequestMapping(path = "/top", method = RequestMethod.POST)
-	public String login(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,SessionStatus sessionStatus,HttpSession session) {
+	public String login(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 		//ログインした人の情報
 		String empId = req.getParameter("empId");
 		String password = req.getParameter("password");
@@ -82,10 +81,11 @@ public class IndexController {
 
 		Employee employee = empRepository.findByEmpIdAndPassword(empId, password);
 
-		
-		
+
+
+
 		//セッションデータ設定
-		session.setAttribute("empUserInfo",employee);
+		session.setAttribute("userInfo",employee);
 		//ログインユーザー情報
 		model.addAttribute("employee",employee);
 
@@ -110,7 +110,7 @@ public class IndexController {
 	}
 
 	@RequestMapping(path = "/top", method = RequestMethod.GET)
-	public String top(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,SessionStatus sessionStatus,HttpSession session) {
+	public String top(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 		List<Employee> empAll= empRepository.findAll();    
 		model.addAttribute("empAll",empAll);
 
@@ -122,28 +122,27 @@ public class IndexController {
 
 	//ユーザー更新入力情報　th:object empPost
 	@RequestMapping(path = "/mypage", method = RequestMethod.POST)
-	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,SessionStatus sessionStatus,HttpSession session) {
-		
+	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 		session = req.getSession();
 		
 		
-
 		
+
 
 		//ログインユーザー情報
 		return "mypage";
 	}
-	
+
 
 	//マイページリンク押下，既存情報の出力
 	@RequestMapping(path = "/mypage", method = RequestMethod.GET)
-	public String empLink(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session,SessionStatus sessionStatus) {
+	public String empLink(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 		session = req.getSession();
-		Object userInfo=   session.getAttribute("empUserInfo");
-		model.addAttribute("empUserInfo",userInfo);
-		System.out.println(userInfo);
-		
-		
+		Object userInfo=   session.getAttribute("userInfo");
+		model.addAttribute("userInfo",userInfo);
+
+
+
 		return "mypage";
 
 

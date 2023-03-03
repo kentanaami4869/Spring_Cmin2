@@ -18,47 +18,45 @@
 	<aside th:include="layout/aside :: side"></aside>
 	<!-- メイン -->
 	<article class="mypage">
-		<h3 class="page_title">マイページ変更・確認画面</h3>
-		<table class="table employee">
+		
+			<h3 class="page_title">マイページ変更・確認画面</h3>
 
-			<tr th:each="userInfo : ${userInfo}" th:object="${empUserInfo}">
-			<tr>
-				<th class="cell_title">社員番号</th>
-				<th class="cell_required"></th>
-				<td th:text="${empId}"></td>
-			</tr>
-			<tr>
-				<th class="cell_title">名前</th>
-				<th class="cell_required"></th>
-				<td th:text="${empName}"></td>
-			</tr>
-			<tr>
-				<th class="cell_title">パスワード</th>
-				<th class="cell_required"></th>
-				<td th:text="${password}"></td>
-			</tr>
-			<tr>
-				<th class="cell_title">生年月日</th>
-				<th class="cell_required"></th>
-				<td th:text="${birthday}"></td>
-			</tr>
-			<tr>
-				<th class="cell_title">性別</th>
-				<th class="cell_required"></th>
-				<td><input type="radio" name="性別" value="男" /> 男 <input
-					type="radio" name="性別" value="女" /> 女
-				<td th:switch="${gender}"><a th:case=1 th:text="男"></a> <a
-					th:case=2 th:text="女"></a></td>
-			</tr>
-		</table>
-		<div class="btn_area_center">
-			<input type="submit" value="登録" class="btn">
-		</div>
+			<table class="table employee">
 
+				<tr th:each="empUserInfo : ${userInfo}" th:object="${userInfo}">
+				<tr>
+					<th class="cell_title">社員番号</th>
+					<td th:text="*{userInfo.empId}"></td>
+				</tr>
+				<tr>
+					<th class="cell_title">名前</th>
+					<td th:text="*{userInfo.empName}"></td>
+					
+				</tr>
+				<tr>
+					<th class="cell_title">パスワード</th>
+					<td th:text="*{userInfo.password}"></td>
+					
+				</tr>
+				<tr>
+					<th class="cell_title">生年月日</th>
+					<td th:text="*{userInfo.birthday}"></td>
+					
+				</tr>
+				<tr>
+					<th class="cell_title">性別</th>
+					<td><input type="radio" name="性別" value="1"th:text="*{userInfo.gender}" /> 男 <input
+						type="radio" name="性別" value="2"th:text="*{userInfo.gender}" /> 女
+						 </td>
+				</tr>
+			</table>
+			<div class="btn_area_center">
+				<input type="submit" value="変更確定" class="btn">
+			</div>
 
 
 
-
+		
 
 	</article>
 	<!-- フッダー -->
