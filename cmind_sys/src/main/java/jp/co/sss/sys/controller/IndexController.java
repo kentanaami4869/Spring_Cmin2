@@ -5,6 +5,7 @@ package jp.co.sss.sys.controller;
 
 
 
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -125,12 +126,17 @@ public class IndexController {
 	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 		session = req.getSession();
 		
-		
-		
+		String empName = req.getParameter("empName");
+		String password = req.getParameter("password");
+		String birthday = req.getParameter("birthday");
+		String gender = req.getParameter("gender");
+	
+		List<Employee> Userform= empRepository.saveAll(empName,password,birthday,gender);
+		model.addAttribute("UserForm",Userform);
 
 
 		//ログインユーザー情報
-		return "mypage";
+		return "edit_fin";
 	}
 
 
@@ -140,6 +146,11 @@ public class IndexController {
 		session = req.getSession();
 		Object userInfo=   session.getAttribute("userInfo");
 		model.addAttribute("userInfo",userInfo);
+		
+		
+		
+		
+		
 
 
 
