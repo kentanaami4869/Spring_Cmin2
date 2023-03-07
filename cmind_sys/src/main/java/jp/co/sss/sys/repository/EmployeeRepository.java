@@ -8,9 +8,10 @@ package jp.co.sss.sys.repository;
 
 
 
-import java.util.List;
+import java.util.Date;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import jp.co.sss.sys.entity.Employee;
@@ -21,13 +22,14 @@ import jp.co.sss.sys.entity.Employee;
  *
  */
 @Repository
+
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
 
 	Employee findByEmpIdAndPassword(String empId, String password);
 
 	
-
-	List<Employee> saveAll(String empName, String password, String birthday, String gender);
+	@Query("UPDATE employee FROM empName,password,birthday,gender WHERE Userform = employee ")
+	Employee save(String empName, String password,Date birthday, int gender);
 
 	
 
