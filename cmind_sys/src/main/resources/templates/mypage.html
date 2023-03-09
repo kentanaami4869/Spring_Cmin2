@@ -21,6 +21,7 @@
 
 		<h3 class="page_title">マイページ変更・確認画面</h3>
 		<form action="" th:action="@{/mypage}" th:object="${Userform}" method="post">
+		<input type="hidden" th:field="*{emp_id}" th:value="*{emp_id}">
 		<table class="table employee">
 
 			<tr th:each="empUserInfo : ${userInfo}" th:object="${userInfo}">

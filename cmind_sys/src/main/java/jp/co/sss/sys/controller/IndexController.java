@@ -127,16 +127,14 @@ public class IndexController {
 	@RequestMapping(path = "/mypage", method = RequestMethod.POST)
 	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 		session = req.getSession();
+		String empName = req.getParameter("userInfo.empName");
+		String password = req.getParameter("userInfo.password");
+		String strDate = "userInfo.birthday";
+		Date birthday = Date.valueOf(strDate);
+		int gender = Integer.parseInt("userInfo.gender");
 		
-		String empName = req.getParameter("Userform.empName");
-		String password = req.getParameter("Userform.password");
-		int gender = Integer.parseInt(req.getParameter("Userform.gender"));
-		Date birthday= Date.valueOf("Userform.birthday");
-		
-		
-		Employee Userform= empRepository.save(empName,password,birthday,gender);
-		model.addAttribute("UserForm",Userform);
-
+		List<Employee> Userform= empRepository.saveAll(empName,password,birthday,gender);
+		model.addAttribute("Userform",Userform);
 
 		//ログインユーザー情報
 		return "edit_fin";
@@ -161,7 +159,9 @@ public class IndexController {
 
 
 	}
+	
 }
+
 
 
 
