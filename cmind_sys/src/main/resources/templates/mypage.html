@@ -18,50 +18,55 @@
 	<aside th:include="layout/aside :: side"></aside>
 	<!-- メイン -->
 	<article class="mypage">
-
-		<h3 class="page_title">マイページ変更・確認画面</h3>
-		<form action="" th:action="@{/mypage}" th:object="${Userform}" method="post">
-		<input type="hidden" th:field="*{emp_id}" th:value="*{emp_id}">
-		<table class="table employee">
-
-			<tr th:each="empUserInfo : ${userInfo}" th:object="${userInfo}">
-			<tr>
-				<th class="cell_title">社員番号</th>
-				<td th:text="*{userInfo.empId}"></td>
-			</tr>
-			<tr>
-				<th class="cell_title">名前</th>
-				<td><input type="text" name="empName" th:value="${userInfo.empName}" /></td>
-
-			</tr>
-			<tr>
-				<th class="cell_title">パスワード</th>
-				<td><input type="password" name="password" th:value="${userInfo.password}" /></td>
-
-			</tr>
-			<tr>
-				<th class="cell_title">生年月日</th>
-				<td><input type="text" name="birthday" th:value="${userInfo.birthday}" /></td>
-
-			</tr>
-			<tr>
-				<th class="cell_title">性別</th>
-				<td><input type="radio" name="性別"
-					th:switch="*{userInfo.gender == 1}" th:checked="${userInfo.gender == 1}" /> 男 
-					<input type="radio" name="性別"
-					th:switch="*{userInfo.gender == 2}" th:checked="${userInfo.gender == 2}"> 女</td>
-				
-				
-			</tr>
-		</table>
-		<div class="btn_area_center">
-			<input type="submit" value="変更確定" class="btn">
-		</div>
+		<form action="" th:action="@{/mypage}" th:object="${userInfo}"
+			method="post">
+			<h3 class="page_title">マイページ変更・確認画面</h3>
 
 
+			<table class="table employee">
+
+				<tr th:each="userInfo : ${userInfo}" th:object="${userInfo}">
+				<tr>
+					<th class="cell_title">社員番号</th>
+					<td th:text="*{userInfo.empId}"></td>
+				</tr>
+				<tr>
+					<th class="cell_title">名前</th>
+					<td><input type="text" name="empName"
+						th:value="${userInfo.empName}" /></td>
+
+				</tr>
+				<tr>
+					<th class="cell_title">パスワード</th>
+					<td><input type="password" name="password"
+						th:value="${userInfo.password}" /></td>
+
+				</tr>
+				<tr>
+					<th class="cell_title">生年月日</th>
+					<td><input type="text" name="birthday"
+						th:value="${userInfo.birthday}" /></td>
+
+				</tr>
+				<tr>
+					<th class="cell_title">性別</th>
+					<td><input type="radio" name="性別"
+						th:switch="*{userInfo.gender == 1}"
+						th:checked="${userInfo.gender == 1}" /> 男 <input type="radio"
+						name="性別" th:switch="*{userInfo.gender == 2}"
+						th:checked="${userInfo.gender == 2}"> 女</td>
 
 
-</form>
+				</tr>
+			</table>
+			<div class="btn_area_center">
+				<input type="submit" value="変更確定" class="btn">
+			</div>
+
+
+
+
+		</form>
 	</article>
 	<!-- フッダー -->
 	<footer th:include="layout/footer :: foot"></footer>

@@ -6,7 +6,6 @@ package jp.co.sss.sys.controller;
 
 
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -127,15 +126,10 @@ public class IndexController {
 	@RequestMapping(path = "/mypage", method = RequestMethod.POST)
 	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 		session = req.getSession();
-		String empName = req.getParameter("userInfo.empName");
-		String password = req.getParameter("userInfo.password");
-		String strDate = "userInfo.birthday";
-		Date birthday = Date.valueOf(strDate);
-		int gender = Integer.parseInt("userInfo.gender");
 		
-		List<Employee> Userform= empRepository.saveAll(empName,password,birthday,gender);
-		model.addAttribute("Userform",Userform);
-
+		//List<Employee> Userform= empRepository.saveAll(empName,password,birthday,gender);
+		//model.addAttribute("Userform",Userform);
+		
 		//ログインユーザー情報
 		return "edit_fin";
 	}
@@ -145,7 +139,7 @@ public class IndexController {
 	@RequestMapping(path = "/mypage", method = RequestMethod.GET)
 	public String empLink(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 		session = req.getSession();
-		Object userInfo=   session.getAttribute("userInfo");
+		Object userInfo=session.getAttribute("userInfo");
 		model.addAttribute("userInfo",userInfo);
 		
 		
