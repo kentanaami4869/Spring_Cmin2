@@ -6,6 +6,7 @@ package jp.co.sss.sys.controller;
 
 
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class IndexController {
 	}
 	@Autowired
 	HttpSession session;
-	
+
 
 
 	// 処理
@@ -126,26 +127,53 @@ public class IndexController {
 	@RequestMapping(path = "/mypage", method = RequestMethod.POST)
 	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 		session = req.getSession();
+		String empName = req.getParameter("empName");
+		String password = req.getParameter("password");
+		String str = req.getParameter("gender");
+	    int gender = Integer.parseInt(str);
+	    
+	    try {
+            String strDate ="yyyy/MM/dd";
+            SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
+            java.util.Date birthday = sdFormat.parse(strDate);
+           
+         
+        } catch (ParseException e) {
+            e.printStackTrace();
+           
+//		String birthday = req.getParameter("birthday");
+	     
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+//        try {
+//			java.util.Date date = sdf.parse(birthday);
+//		} catch (ParseException e) {
+			// TODO 自動生成された catch ブロック
+//			e.printStackTrace();
+//		}
+        }
 		
+	    
+
+
 		//List<Employee> Userform= empRepository.saveAll(empName,password,birthday,gender);
 		//model.addAttribute("Userform",Userform);
-		
+
 		//ログインユーザー情報
 		return "edit_fin";
+	
+
 	}
-
-
 	//マイページリンク押下，既存情報の出力
 	@RequestMapping(path = "/mypage", method = RequestMethod.GET)
 	public String empLink(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 		session = req.getSession();
 		Object userInfo=session.getAttribute("userInfo");
 		model.addAttribute("userInfo",userInfo);
-		
-		
-		
-		
-		
+
+
+
+
+
 
 
 
@@ -153,7 +181,7 @@ public class IndexController {
 
 
 	}
-	
+
 }
 
 
