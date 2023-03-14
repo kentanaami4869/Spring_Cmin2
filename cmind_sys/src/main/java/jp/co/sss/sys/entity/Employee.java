@@ -9,11 +9,17 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
+//import org.hibernate.annotations.NamedQuery;
+
+
+
 /**
  * エンティティクラス
  * @author Inoue Nami
  *
  */
+//@NamedQuery(name = "saveAll", query = "UPDATE employee SET emp_name='empName', password='password', birthday=birthday,gender=gender WHERE emp_id ='employee")
+
 @Entity
 
 
@@ -21,7 +27,7 @@ import javax.validation.constraints.Size;
 public class Employee {
 
 	
-	/**
+	/*
 	 * 社員番号
 	 */
 	@Id

@@ -43,7 +43,8 @@ public class IndexController {
 	@Autowired
 	EmployeeRepository empRepository;
 	LoginForm loginform;
-	SimpleDateFormat sdf;
+	
+	
 
 
 
@@ -128,41 +129,36 @@ public class IndexController {
 	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
 		session = req.getSession();
 		String empName = req.getParameter("empName");
-		String password = req.getParameter("password");
-		String str = req.getParameter("gender");
-	    int gender = Integer.parseInt(str);
-	    
+		String updatepass = req.getParameter("password");
+		String birthday = req.getParameter("birthday"); 
+		   
+	    SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");  
+	 
 	    try {
-            String strDate ="yyyy/MM/dd";
-            SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
-            java.util.Date birthday = sdFormat.parse(strDate);
-           
-         
-        } catch (ParseException e) {
-            e.printStackTrace();
-           
-//		String birthday = req.getParameter("birthday");
-	     
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-//        try {
-//			java.util.Date date = sdf.parse(birthday);
-//		} catch (ParseException e) {
+			java.util.Date savebirthday = fm.parse(birthday);
+		} catch (ParseException e) {
 			// TODO 自動生成された catch ブロック
-//			e.printStackTrace();
-//		}
-        }
+			e.printStackTrace();
+		} 
+        	
 		
-	    
+	    String gender = req.getParameter("gender");
+	    int savegender = Integer.parseInt(gender);
 
+        
+	    List<Employee> users = empRepository.saveAll(empName,updatepass,savebirthday,gender);
 
-		//List<Employee> Userform= empRepository.saveAll(empName,password,birthday,gender);
-		//model.addAttribute("Userform",Userform);
+		
+		
 
 		//ログインユーザー情報
 		return "edit_fin";
 	
 
+	
+		
 	}
+
 	//マイページリンク押下，既存情報の出力
 	@RequestMapping(path = "/mypage", method = RequestMethod.GET)
 	public String empLink(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
