@@ -4,10 +4,13 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+//import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.NamedQuery;
+import org.springframework.data.annotation.Id;
 
 //import org.hibernate.annotations.NamedQuery;
 
@@ -18,7 +21,7 @@ import javax.validation.constraints.Size;
  * @author Inoue Nami
  *
  */
-//@NamedQuery(name = "saveAll", query = "UPDATE employee SET emp_name='empName', password='password', birthday=birthday,gender=gender WHERE emp_id ='employee")
+@NamedQuery(name = "saveEmployee", query = "UPDATE employee SET emp_name= employee.emp_name, password= password,birthday=birthday,gender=gender WHERE emp_id = 'employee'")
 
 @Entity
 

@@ -43,8 +43,8 @@ public class IndexController {
 	@Autowired
 	EmployeeRepository empRepository;
 	LoginForm loginform;
-	
-	
+	SimpleDateFormat fm;
+
 
 
 
@@ -126,37 +126,40 @@ public class IndexController {
 
 	//ユーザー更新入力情報　th:object empPost
 	@RequestMapping(path = "/mypage", method = RequestMethod.POST)
-	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
+	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) throws ParseException {
 		session = req.getSession();
 		String empName = req.getParameter("empName");
 		String updatepass = req.getParameter("password");
-		String birthday = req.getParameter("birthday"); 
-		   
-	    SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");  
-	 
-	    try {
-			java.util.Date savebirthday = fm.parse(birthday);
-		} catch (ParseException e) {
+		
+			String updateBirthday = req.getParameter("birthday"); 
+			
+			
+			SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");  
+			java.util.Date saveBirthday = fm.parse(updateBirthday);
+//			try {
+//			
+//		} catch (ParseException e) {
 			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		} 
-        	
-		
-	    String gender = req.getParameter("gender");
-	    int savegender = Integer.parseInt(gender);
+//			e.printStackTrace();
+	
 
-        
-	    List<Employee> users = empRepository.saveAll(empName,updatepass,savebirthday,gender);
 
-		
-		
+
+		String gender = req.getParameter("gender");
+		int saveGender = Integer.parseInt(gender);
+
+
+		//	    List<Employee> users = empRepository.saveAll(empName,updatepass,savebirthday,savegender);
+
+
+
 
 		//ログインユーザー情報
 		return "edit_fin";
-	
 
-	
-		
+
+
+
 	}
 
 	//マイページリンク押下，既存情報の出力
