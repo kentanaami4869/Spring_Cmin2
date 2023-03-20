@@ -1,16 +1,17 @@
 package jp.co.sss.sys.entity;
 
-import java.sql.Date;
+
+
+
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-//import javax.persistence.Id;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
-import org.hibernate.annotations.NamedQuery;
-import org.springframework.data.annotation.Id;
 
 //import org.hibernate.annotations.NamedQuery;
 
@@ -21,9 +22,10 @@ import org.springframework.data.annotation.Id;
  * @author Inoue Nami
  *
  */
-@NamedQuery(name = "saveEmployee", query = "UPDATE employee SET emp_name= employee.emp_name, password= password,birthday=birthday,gender=gender WHERE emp_id = 'employee'")
-
 @Entity
+//@NamedQuery(name = "saveAll", query = "UPDATE Employee e SET emp_name=:empName, password=:password, birthday=:birthday,gender=:gender WHERE emp_id=:empId")
+
+
 
 
 @Table(name = "employee")

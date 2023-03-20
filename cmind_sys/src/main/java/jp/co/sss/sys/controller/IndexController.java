@@ -6,8 +6,10 @@ package jp.co.sss.sys.controller;
 
 
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +45,7 @@ public class IndexController {
 	@Autowired
 	EmployeeRepository empRepository;
 	LoginForm loginform;
-	SimpleDateFormat fm;
+	
 
 
 
@@ -126,42 +128,50 @@ public class IndexController {
 
 	//ユーザー更新入力情報　th:object empPost
 	@RequestMapping(path = "/mypage", method = RequestMethod.POST)
-	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) throws ParseException {
+	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session)  {
 		session = req.getSession();
-		String empName = req.getParameter("empName");
-		String updatepass = req.getParameter("password");
 		
-			String updateBirthday = req.getParameter("birthday"); 
+			String empName = req.getParameter("empName");
+			String password = req.getParameter("password");
+			String strDate =  req.getParameter("birthday");
+			String savegender = req.getParameter("gender");
+
 			
 			
-			SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");  
-			java.util.Date saveBirthday = fm.parse(updateBirthday);
-//			try {
+			 
+			try {
+				
+				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date birthday = sdFormat.parse(strDate);
+				System.out.println(birthday);
+			} catch (ParseException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
+			}
+			int gender = Integer.parseInt(savegender);
+			
+			
 //			
-//		} catch (ParseException e) {
-			// TODO 自動生成された catch ブロック
-//			e.printStackTrace();
-	
 
+		
 
+			
 
-		String gender = req.getParameter("gender");
-		int saveGender = Integer.parseInt(gender);
+//			Employee saveEmpName(empName,password, birthday,gender);
 
-
-		//	    List<Employee> users = empRepository.saveAll(empName,updatepass,savebirthday,savegender);
-
-
-
-
-		//ログインユーザー情報
-		return "edit_fin";
-
-
-
+			return "edit_fin";
+			
 
 	}
+			
 
+		//ログインユーザー情報
+		
+
+
+
+
+	
 	//マイページリンク押下，既存情報の出力
 	@RequestMapping(path = "/mypage", method = RequestMethod.GET)
 	public String empLink(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
