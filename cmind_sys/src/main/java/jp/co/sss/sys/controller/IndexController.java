@@ -45,7 +45,7 @@ public class IndexController {
 	@Autowired
 	EmployeeRepository empRepository;
 	LoginForm loginform;
-	
+
 
 
 
@@ -128,50 +128,57 @@ public class IndexController {
 
 	//ユーザー更新入力情報　th:object empPost
 	@RequestMapping(path = "/mypage", method = RequestMethod.POST)
-	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session)  {
+	public String empUser(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) throws ParseException  {
 		session = req.getSession();
-		
-			String empName = req.getParameter("empName");
-			String password = req.getParameter("password");
-			String strDate =  req.getParameter("birthday");
-			String savegender = req.getParameter("gender");
 
-			
-			
-			 
-			try {
-				
-				SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-				Date birthday = sdFormat.parse(strDate);
-				System.out.println(birthday);
-			} catch (ParseException e) {
-				// TODO 自動生成された catch ブロック
-				e.printStackTrace();
-			}
-			int gender = Integer.parseInt(savegender);
-			
-			
-//			
+		String empName = req.getParameter("empName");
+		String password = req.getParameter("password");
+		String strDate =  req.getParameter("birthday");
+		String savegender = req.getParameter("gender");
 
-		
 
-			
 
-//			Employee saveEmpName(empName,password, birthday,gender);
 
-			return "edit_fin";
-			
+
+
+		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date birthday = sdFormat.parse(strDate);
+		System.out.println(birthday);
+
+		int gender = Integer.parseInt(savegender);
+
+
+		Employee userInfo = (Employee) session.getAttribute("userInfo");
+		userInfo.setEmpName(empName);
+		userInfo.setPassword(password);
+		userInfo.setBirthday(birthday);
+		userInfo.setGender(gender);
+
+		Employee updateEmployee = empRepository.save(userInfo);
+
+
+
+
+
+
+		return "edit_fin";
+
 
 	}
-			
-
-		//ログインユーザー情報
-		
 
 
 
+	// TODO 自動生成されたメソッド・スタブ
 
-	
+
+
+	//ログインユーザー情報
+
+
+
+
+
+
 	//マイページリンク押下，既存情報の出力
 	@RequestMapping(path = "/mypage", method = RequestMethod.GET)
 	public String empLink(@Validated LoginForm loginForm, HttpServletRequest req, HttpServletResponse res,BindingResult br,Model model,HttpSession session) {
