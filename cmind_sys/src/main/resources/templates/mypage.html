@@ -45,7 +45,7 @@
 				<tr>
 					<th class="cell_title">生年月日</th>
 					<td><input type="text" name="birthday"
-						th:value="${userInfo.birthday}" /></td>
+					th:value="#temporals.format(userInfo.birthday, 'yyyy-MM-dd')}" /></td>
 
 				</tr>
 				<tr>
