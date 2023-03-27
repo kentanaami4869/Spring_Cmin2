@@ -39,7 +39,7 @@
         
           <td th:text="*{empId}"></td>
           <td th:text="*{empName}"></td>
-          <td th:text="*{birthday}"></td>
+          <td th:text="*{#dates.format(birthday,'yyyy-MM-dd')}"></td>
           <td th:switch="*{gender}">
         
          

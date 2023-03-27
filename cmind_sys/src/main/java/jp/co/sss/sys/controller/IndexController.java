@@ -9,6 +9,7 @@ package jp.co.sss.sys.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -140,7 +141,7 @@ public class IndexController {
 		
 
 		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
-		java.util.Date birthday = sdFormat.parse(date);
+		Date birthday = sdFormat.parse(date);
 		
 		int gender = Integer.parseInt(savegender);
 
@@ -153,8 +154,10 @@ public class IndexController {
 
 		Employee updateEmployee = empRepository.save(userInfo);
 
-		
-		
+		System.out.println(empName);
+		System.out.println(password);
+		System.out.println(birthday);
+		System.out.println(gender);
 
 
 		return "edit_fin";
